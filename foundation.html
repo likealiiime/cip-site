@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+	<head>
+		<title>The Color Interface Project - Foundation kit</title>
+		<link rel="stylesheet" href="960.css" type="text/css" media="screen" title="Index" charset="utf-8" />
+		<link rel="stylesheet" href="index.css" type="text/css" media="screen" title="Index" charset="utf-8" />
+		<script type="text/javascript">
+		var gOverride = {
+		  gColor: '#FF0000',
+		  gColumns: 16,
+		  pEnabled: false
+		};
+		</script>
+		<script type="text/javascript" src="javascripts/mootools-1.2.4-core-yc.js"></script>
+		<script type="text/javascript" src="javascripts/mootools-1.2.4.4-more.js"></script>
+		<script type="text/javascript" src="javascripts/cipsite.js"></script>
+	</head>
+
+	<body>
+		<div class="container_16" id="mother">
+			<div id="header">
+				<div><div>
+					<h1>Foundation</h1>
+					<p>
+						The Foundation kit includes everything you need to get started.
+					</p>
+					<p>
+						Just by extending <strong>CIObject</strong>,
+						your objects will receive <strong>key-value coding</strong>, <strong>property synthesis</strong>,
+						an <strong>object hierarchy</strong>, and <strong>events</strong>.
+					</p>
+					<p>
+						Extend <strong>CIView</strong> to create visual components with <strong>subviews</strong>,
+						a bounding <strong>frame</strong>, <strong>dynamic resizing</strong>, and the <strong>unrender/render</strong> mechanism &ndash;
+						again, <strong>all for free</strong>.
+					</p>
+				</div></div>
+			</div>
+			<a name="start"></a>
+			<div id="content">
+				<div class="push_1 grid_14 navBanner alpha omega">
+					<div class="grid_1 alpha"><a href="index.html"><img src="images/icons/home.png" alt="home" /></a></div>
+					<div class="grid_13 omega navLinks">
+						<a href="#start" class="selected"><img src="images/numerals/i.png" alt="1" />Foundation Basics</a>
+						<a href="foundation-view.html#start"><img src="images/numerals/ii.png" alt="2" />The View</a>
+						<a href="foundation-together.html#start"><img src="images/numerals/iii.png" alt="3" />Putting it all together</a>
+						<a href="foundation-faqs.html#start"><img src="images/numerals/iv.png" alt="4" />FAQs</a>
+					</div>
+				</div>
+				<div class="clear withSpace"></div>
+				
+				<div class="grid_14 push_1 alpha omega">
+					<h2>Built on Mootools</h2>
+					<p>
+						CIP is built on the <a href="http://mootools.net/">Mootools Library</a>. Mootools is an
+						object-oriented library that makes writing complex Javascript a breeze. Mootools was chosen because of its
+						<strong>simplicity</strong>, its <strong>modern</strong>, object-oriented idioms, and its <strong>roadmap</strong>.
+						Not to mention its tight and knowledgeable community.
+					</p>
+					<p>
+						CIP includes the entirety of <a href="http://mootools.net/docs/core">Mootools.Core</a> and
+						<a href="http://mootools.net/docs/more">Mootools.More</a>, which provides everything from extensions to Array, to
+						classical inheritance, to drag &amp; drop.
+					</p>
+				</div>
+				<div class="clear"></div>
+				
+				<div class="grid_7 push_1 alpha">
+					<h2>Tell me a little about yourself</h2>
+					<p>
+						CIP proudly borrows from <a href="http://developer.apple.com/mac/library/documentation/MacOSX/Conceptual/OSX_Technology_Overview/AppTechnology/AppTechnology.html#//apple_ref/doc/uid/TP40001067-CH270-SW4">Cocoa</a>,
+						Apple&rsquo;s application development environment. Like Cocoa, CIP has clear, self-documenting
+						classes and methods. One of the most powerful concepts it borrows is called <em>key-value coding</em> (KVC).
+					</p><p>
+						Key-value coding means you tell your class what properties it should have, optionally give them defaults,
+						and those properties, along with accessors and mutators, will be created for you. Furthermore, mutators
+						fire <code>PropertyChanging</code> and <code>PropertyChanged</code> events, which provide an elegant
+						solution to value binding without any complexity. Mootools&rsquo; provides classical inheritance,
+						so you can override the accessor and mutator methods as you see fit.
+					</p>
+				</div>
+				<div class="push_1 grid_7 omega example">
+					<h2>Example: KVC</h2>
+					<p class="codeblock" lang="5">
+						var Dog = new Class({
+							Extends: <dfn title="CIObject is the base class for all CIP objects.">CIObject</dfn>,
+							initialize: function(configuration) {
+								this.<dfn title="Be sure to call the parent class&rsquo; constructor.">parent(configuration)</dfn>;
+								this.<dfn title="Establish hierarchy by telling the class its name. Its hierarchy so far is Dog &larr; CIObject.">isA('Dog')</dfn>;
+								this.<dfn title="Dynamically create properties for this class, optionally passing in an Object or Hash with which to initialize them. The methods get&laquo;Property&raquo;() and set&laquo;Property&raquo;(newValue) are created for you.">synthesize</dfn>({
+									<dfn title="The age property, and setAge and getAge methods will be created.">age</dfn>: <dfn title="If configuration does not specify an age, 1 will be used as a default.">1</dfn>,
+									<dfn title="Same goes for sex...">sex</dfn>: 'male',
+									<dfn title="..and bark.">bark</dfn>: 'Woof!'
+								}, configuration);
+							}
+						});
+						
+						var dog = new Dog(<dfn title="Providing a configuration Object is a common Javascript pattern that is well-supported by CIP.">{ sex: 'female', bark: 'Arf!!' }</dfn>);
+						dog.<dfn title="This method was automatically created by synthesize. It will fire the PropertyChanging event before it's changed, then PropertyChanged afterward.">setSex</dfn>('male');
+						dog.<dfn title="This is the generic set mutator. It will also fire the two property change events.">set</dfn>('bark', 'Ruff!');
+						dog.<dfn title="This was also created by synthesize and will return the value of age (1 for our dog). You are free to override the accessor and mutator for your own needs.">getAge</dfn>();
+					</p>
+				</div>
+				<div class="clear withSpace"></div>
+				
+				<div class="push_1 grid_14 alpha">
+					<h2>Fire Away</h2>
+					<img src="images/diagrams/event_flow.png" alt="Event Flow" class="floatRight"/>
+					<p>
+						Events, along with key-value coding, are the backbone of data binding. While events are relatively new to
+						Cocoa, Javascript users have been using events and event handlers since the dawn of HTML. CIP uses events
+						in the same conventional way to achieve many goals.
+					</p><p>
+						An <em>event</em> is when one object lets other objects know something has happened. An <em>event listener</em>
+						lets a target object know it&rsquo;s interested in a specific event it will fire. When that event is fired,
+						the <em>event handler</em> is the function called to take action. CIP defines many different events for the lifecycle
+						of an object &mdash; <code>CIEvent.GotData</code>, <code>.AddedToDom</code>, <code>.Hiding</code>, <code>.Hidden</code>
+						and <code>.Rendered</code> are just a few.
+					</p>
+					<p>
+						There is one event that every object will fire at some point &mdash; <code>CIEvent.PropertyChanged</code>.
+						Listeners, including the changing object, can listen for this event and update themselves accordingly. This
+						is called <em>key-value observing</em> (KVO), and the process of updating one object in response to another is called
+						<em>binding</em>.
+					</p>
+				</div>
+				<div class="clear withSpace"></div>
+				
+				<div class="push_1 grid_14 alpha omega example">
+					<h2>Example: KVO &amp; Binding</h2>
+					<p>
+						In this example, we have a Dog and a DogWalker. Using KVO, we can keep the dog constantly 5 paces ahead of its walker
+						(we say the dog&rsquo;s <code>paces</code> property is bound to its walker&rsquo;s <code>paces</code> property).
+						We also allow the walker to be changed and have the dog keep in step.
+					</p>
+					<p class="codeblock" lang="5">
+						var DogWalker = new Class({
+							Extends: CIObject,
+							initialize: function(name) {
+								this.<dfn title="We still need to call our superclass&rsquo; initializer even if we&rsquo;re not using a configuration &lsaquo;Object&rsaquo;.">parent()</dfn>;
+								this.isA('DogWalker');
+								this.synthesize({ name: name, paces: 0 });
+								this.addEvent(<dfn title="We will listen for changes on this [[DogWalker]]&rsquo;s properties, and fire its [[_pacesChanged]] method">CIEvent.PropertyChanged</dfn>, this._pacesChanged);
+							},
+							step: function() { this.<dfn title="We use [[setPaces]] instead of [[this.paces=]] to support KVO for our companion Dog class.">setPaces</dfn>(this.paces + 1); return <dfn title="It&rsquo;s common practice to return the reference to the object so that methods can be chained.">this</dfn>; },
+							<dfn title="Notice the use of the leading underscore, which indicates this method is not to be used publicly. We could have defined it privately in the constructor.">_pacesChanged</dfn>: function(<dfn title="This the the method signature for the event handler for the [[CIEvent.PropertyChanging]] and [[CIEvent.PropertyChanged]] events.">property, newValue, oldValue</dfn>) {
+								<dfn title="We&rsquo;s only interested in announcing changes to [[paces]]">if (property == 'paces')</dfn>
+									console.log(this.name + ' is now at ' + this.paces + ' paces');
+							},
+						});
+						var Dog = new Class({
+							Extends: CIObject,
+							initialize: function(aWalker) {
+								this.parent();
+								this.isA('Dog');
+								this.synthesize({ name: name, paces: 0, walker: null });
+								this.<dfn title="[[Function#bind]] returns a reference to a new function, so in order to remove the event from this.walker, we&rsquo;ll need to keep this specific function around. This process is only necessary when an event emitter can change and you need to keep track of which object your handler listens to. In Foundation kit, this pattern is only in one place, so it doesn&rsquo;t happen as often as you might think.">_boundEventHandler</dfn> = this._walkerChanged.<dfn title="&lsaquo;Function#bind&rsaquo; will force the &lsaquo;this&rsaquo; reference inside the function to be whatever is passed in. Handlers usually need to be bound to the handler class&rsquo; instance because [[Event#fireEvent]] will try to set [[this]] to the firing class&rsquo; instance.">bind(this)</dfn>;
+							},
+							<dfn title="We&rsquo;re overriding the [[setWalker]] method that was created for us by [[CIObject#synthesize&rsaquo;">setWalker: function(newWalker)</dfn> {
+								if (this.walker) {
+									this.walker.<dfn title="We remove the bound handler from the old walker so we no longer respond to events from it.">removeEvent</dfn>(CIEvent.PropertyChanged, this._boundEventHandler);
+									console.log(this.name + ' will no longer be walked by ' + this.walker.getName());
+								}
+								this.<dfn title="If you override a synthesized mutator, you MUST use [[CIObject#set(property, newValue)]] so the object can change the value and fire the appropriate events.">set</dfn>('walker', newWalker);
+								console.log(this.name + ' will now be walked by ' + this.walker.name);
+								this.walker.<dfn title="And now we tell our new walker we&rsquo;re interested in its state and that our bound event handler should be fired.">addEvent</dfn>(CIEvent.PropertyChanged, this._boundEventHandler);
+								this.<dfn title="We use [[setPaces]] to support key-value observation by other objects.">setPaces</dfn>(this.walker.<dfn title="You may not know the internal representation of a class&rsquo; property, so using its [[get&lt;Property&gt;]] method is safest and supports encapsulation.">getPaces</dfn>() + 5);
+							},
+							setPaces: function(newPaces) {
+								this.set('paces', newPaces);
+								console.log(this.name + ' is now at ' + this.paces + ' paces');
+							},
+							_walkerChanged: function(property, newValue, oldValue) {
+								if (property == 'paces') this.setPaces(newValue + 5);
+							}
+						});
+						
+						var joe = new DogWalker('Joe');
+						var kathy = new DogWalker('Kathy');
+						joe.setPaces(5);
+						kathy.setPaces(15);
+						var fido = new Dog('Fido');
+
+						fido.setWalker(joe);
+						joe.step().step();
+						fido.setWalker(kathy);
+						<dfn title="Because we unbound our event handler when we changed walkers, [[fido]] will no longer respond to changes on [[joe]].">joe.step()</dfn>;
+					</p>
+				</div>
+				<div class="clear"></div>
+			</div> <!-- end content -->
+		</div> <!-- end mother -->
+		<div id="footer">
+			The Color Interface Project is a <a href="http://www.softilluminations.com">Soft Illuminations, Inc.</a> project. &copy; 2007 &ndash; 2009.<br/><br/>
+			<img src="images/site/si_ring.png" alt="Soft Illuminations, Inc.">
+		</div>
+	</body>
+</html>

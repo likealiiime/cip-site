@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+	<head>
+		<title>The Color Interface Project - Foundation kit</title>
+		<link rel="stylesheet" href="960.css" type="text/css" media="screen" title="Index" charset="utf-8" />
+		<link rel="stylesheet" href="index.css" type="text/css" media="screen" title="Index" charset="utf-8" />
+		<script type="text/javascript">
+		var gOverride = {
+		  gColor: '#FF0000',
+		  gColumns: 16,
+		  pEnabled: false
+		};
+		</script>
+		<script type="text/javascript" src="javascripts/mootools-1.2.4-core-yc.js"></script>
+		<script type="text/javascript" src="javascripts/mootools-1.2.4.4-more.js"></script>
+		<script type="text/javascript" src="javascripts/cipsite.js"></script>
+	</head>
+
+	<body>
+		<div class="container_16" id="mother">
+			<div id="header">
+				<div>
+					<div>
+						<h1>Self-Controlling</h1>
+						<p>
+							CIP emphasizes components that contain their own logic.
+						</p>
+						<p>
+							Use the <strong>CIRequestable</strong> mixin to allow your classes to make <strong>RESTful</strong> requests and handle
+							different states and responses of the request.
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="clear"></div>
+			<a name="start"></a>
+			<div id="content">
+				<div class="push_1 grid_14 navBanner alpha omega">
+					<div class="grid_1 alpha"><a href="index.html"><img src="images/icons/home.png" alt="home" /></a></div>
+					<div class="grid_13 omega navLinks">
+						<a href="#start" class="selected"><img src="images/numerals/i.png" alt="1" />Self-Controlling Basics</a>
+						<a href="selfcontrolling-cirequestable.html#start"><img src="images/numerals/ii.png" alt="2" />CIRequestable</a>
+						<a href="selfcontrolling-extracredit.html#start"><img src="images/numerals/iii.png" alt="3" />Extra Credit</a>
+						<a href="selfcontrolling-faqs.html#start"><img src="images/numerals/iv.png" alt="4" />FAQs</a>
+					</div>
+				</div>
+				<div class="clear withSpace"></div>
+				
+				<div class="grid_14 push_1 alpha omega">
+					<h2>Control Yourself</h2>
+					<p>
+						One of CIP&rsquo;s guiding pricinciples is <em>self-control</em>.
+						Self-controlling components and objects are able to request their own
+						data, process it, present it, and handle interactions with it. Self-controlling
+						components are helpful because they are drop-in replacements for less-capable
+						components and even entire systems. For instance, the <code>CIButton</code> component is
+						able to make <code>GET</code>, <code>PUT</code>, <code>POST</code>, and
+						<code>DELETE</code> requests, render itself, re-render itself differently while
+						requesting, and delegate the response when the requesting is finished. In
+						other frameworks, this process might require an object to request the data,
+						an object to format incoming or outgoing data, an object to encapsulate an
+						error, the button itself, and a controller object or function to handle the
+						logistics of requesting, changing states, updating the button, and handling
+						a response.
+					</p><p>
+						<img src="images/diagrams/self-controlling-button.png" alt="self controlling button" />
+					</p><p>
+						Self-controlling components use a variety of techniques, mainly mixins and
+						delegation. <em>Mixins</em> are encapsulated methods that can be added to
+						existing classes on-the-fly. In CIP, mixins are used to &ldquo;bundle up&rdquo;
+						reusable functionality without subclassing, similar to Java&rsquo;s interfaces,
+						Ruby&rsquo;s modules and Objective-C&rsquo;s categories. The mixin
+						to give components the ability to make requests is <code>CIRequestable</code>,
+						which we&rsquo;ll explore in <a href="selfcontrolling-cirequestable.html#start">the next section</a>.
+					</p><p>
+						<em>Delegation</em> is a design pattern whereby one object relinquishes
+						decisions to another. An object can support more uses
+						and scenarios by delegating the responsibility of implementation to another
+						object or function. We have already seen one example of delegation in CIP &mdash;
+						<code>CIRect</code> delegates measurement logic to its view. The view is free
+						to provide a <code>Number</code> or a <code>CIResizeBehavior</code>, which can delegate
+						the responsibility of measurement to yet another view. In our self-controlling button example,
+						the button relies on a <code>CIRequest</code> object to handle the requesting,
+						but that request object delegates responsibility for handling the request to the calling
+						parent via its callback methods.
+					</p>
+				</div>
+				<div class="clear"></div>
+				
+				
+				<div class="clear"></div>
+			</div> <!-- end content -->
+		</div> <!-- end mother -->
+		<div id="footer">
+			The Color Interface Project is a <a href="http://www.softilluminations.com">Soft Illuminations, Inc.</a> project. &copy; 2007 &ndash; 2009.<br/><br/>
+			<img src="images/site/si_ring.png" alt="Soft Illuminations, Inc.">
+		</div>
+	</body>
+</html>

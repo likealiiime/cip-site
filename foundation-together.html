@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+	<head>
+		<title>The Color Interface Project - Foundation kit</title>
+		<link rel="stylesheet" href="960.css" type="text/css" media="screen" title="Index" charset="utf-8" />
+		<link rel="stylesheet" href="index.css" type="text/css" media="screen" title="Index" charset="utf-8" />
+		<script type="text/javascript">
+		var gOverride = {
+		  gColor: '#FF0000',
+		  gColumns: 16,
+		  pEnabled: false
+		};
+		</script>
+		<script type="text/javascript" src="javascripts/mootools-1.2.4-core-yc.js"></script>
+		<script type="text/javascript" src="javascripts/mootools-1.2.4.4-more.js"></script>
+		<script type="text/javascript" src="javascripts/cipsite.js"></script>
+	</head>
+
+	<body>
+		<div class="container_16" id="mother">
+			<div id="header">
+				<div><div>
+					<h1>Foundation</h1>
+					<p>
+						The Foundation kit includes everything you need to get started.
+					</p>
+					<p>
+						Just by extending <strong>CIObject</strong>,
+						your objects will receive <strong>key-value coding</strong>, <strong>property synthesis</strong>,
+						an <strong>object hierarchy</strong>, and <strong>events</strong>.
+					</p>
+					<p>
+						Extend <strong>CIView</strong> to create visual components with <strong>subviews</strong>,
+						a bounding <strong>frame</strong>, <strong>dynamic resizing</strong>, and the <strong>unrender/render</strong> mechanism &ndash;
+						again, <strong>all for free</strong>.
+					</p>
+				</div></div>
+			</div>
+			<a name="start"></a>
+			<div id="content">
+				<div class="push_1 grid_14 navBanner alpha omega">
+					<div class="grid_1 alpha"><a href="index.html"><img src="images/icons/home.png" alt="home" /></a></div>
+					<div class="grid_13 omega navLinks">
+						<a href="foundation.html#start"><img src="images/numerals/i.png" alt="1" />Foundation Basics</a>
+						<a href="foundation-view.html#start"><img src="images/numerals/ii.png" alt="2" />The View</a>
+						<a href="#start" class="selected"><img src="images/numerals/iii.png" alt="3" />Putting it all together</a>
+						<a href="foundation-faqs.html#start"><img src="images/numerals/iv.png" alt="4" />FAQs</a>
+					</div>
+				</div>
+				<div class="clear withSpace"></div>
+				
+				<div class="grid_14 push_1 alpha omega">
+					<h2>Putting it all together</h2>
+					<p>
+						Let&rsquo;s explore the Foundational topics by completing our <code>EXButton</code> class. It will be fully functional,
+						styled, resizable, and touch on every concept presented. See the <a href="foundation-faq.html#start">FAQ</a> for notes on browser compatibility and CSS.
+					</p>
+				</div>
+				<div class="clear withSpace"></div>
+				
+				<div class="grid_14 push_1 banner alpha omega">
+					<p style="text-align: center;">
+						<a href="#"><img src="images/icons/inspect.png" alt="download and run" class="breakout" style="left: 230px; bottom: -7px;"/>Download and run this example</a>
+					</p>
+				</div>
+				<div class="clear"></div>
+				
+				<div class="grid_7 push_1 alpha collapsible example">
+					<h2>1. exbutton.js - EXButton</h2>
+					<p>
+						This is the <code>EXButton</code> class. We have added the use of <code>CIView#subviews</code>.
+						<code>EXButton</code> does not check types, so any <code>CIView</code>s may be used in <code>subviews</code>.
+					</p>
+					<p class="codeblock" lang="5">
+						var EXButton = new Class({
+							Extends: CIView,
+
+							initialize: function(configuration) {
+								this.parent(configuration);
+								this.isA('EXButton');
+								this.synthesize([
+									'label', 'description'
+								], configuration);
+							},
+							_makeElement: function(parent) {
+								var button = new Element('div',
+									this._objectForViewBaseElement()
+								);
+								parent.adopt(button);
+								var div = new Element('div')
+								button.adopt(div);
+								this.subviews.each(function(v) {
+									v.element(div);
+								});
+								button.adopt(new Element('span'));
+								button.addEvent('click',
+									this._clicked.bind(this)
+								);
+								this.render();
+								return button;
+							},
+							unrender: function() {
+								this.subviews.each(function(v) {
+									v.unrender();
+								});
+								this.element().set('title', '');
+								this.element().getFirst('span').set('html', '');
+								this.fireEvent(CIEvent.Unrendered);
+							},
+							render: function() {
+								this.unrender();
+								this.subviews.each(function(v) { v.render(); });
+								this.element().set('title', this.description);
+								this.element().getFirst('span').set(
+									'html', this.label
+								);
+								this.fireEvent(CIEvent.Rendered);
+							},
+							_clicked: function(event) {
+								this.fireEvent(CIEvent.Clicked, event);
+							}
+						});
+					</p>
+				</div>
+				<div class="grid_7 push_1 omega collapsible example">
+					<h2>2. exbutton.js - EXIcon</h2>
+					<p>
+						While we could have used <code>CIElement</code>s for icons, <code>EXIcon</code> demonstrates
+						a simpler kind of view and how to translate properties like <code>description</code> to
+						HTML attributes.
+					</p>
+					<p class="codeblock" lang="5">
+						var EXIcon = new Class({
+							Extends: CIView,
+
+							initialize: function(configuration) {
+								this.parent(configuration);
+								this.isA('EXButton');
+								this.synthesize(
+									['src', 'description'], configuration
+								);
+							},
+							_makeElement: function(parent) {
+								var icon = new Element('img', {
+									'class': 'EXIcon',
+									'id': this.id
+								});
+								parent.adopt(icon);
+								this.render();
+								return icon;
+							},
+							unrender: function() {
+								this.element().set({
+									src: '',
+									title: '',
+									alt: ''
+								});
+								this.fireEvent(CIEvent.Unrendered);
+							},
+							render: function() {
+								this.element().set({
+									src: this.src,
+									title: this.description,
+									alt: this.description
+								});
+								this.fireEvent(CIEvent.Rendered);
+							}
+						});
+					</p>
+				</div>
+				<div class="clear withSpace"></div>
+				
+				<div class="push_1 grid_7 alpha collapsible example">
+					<h2>3. exbutton.css</h2>
+					<p>
+						Notice the use CSS3 degrades gracefully. Think of using CSS
+						as a layer of separation. As you separate structure from
+						function with HTML and Javascript files, CSS files separate
+						function from style.
+					</p>
+					<p class="codeblock" lang="5">
+						body {
+							font-family: "Lucida Grande", sans-serif;
+							font-size: 12px;
+							padding: 100px;
+							margin: 0;
+						}
+						body > div { margin-bottom: 2em; }
+
+						<dfn title="These styles affect the appearance of the button; none are structural except for [[height]].">.EXButton</dfn> {
+							padding: 3px 5px 0 5px;
+							height: 19px;
+							background-image: url(images/normal.png);
+							background-color: #DDD;
+							border: 1px solid #CCC;
+							-webkit-border-radius: 3px;
+							-moz-border-radius: 3px;
+							border-radius: 3px;
+							color: #666;
+							text-shadow: 0 1px 0 white;
+							text-align: center;
+						}
+						.EXButton:hover {
+							border: 1px solid #AAA;
+							color: #333;
+						}
+						.EXButton:active {
+							background-image: url(images/pressed.png);
+							background-color: #BBB;
+						}
+						.EXButton > div {
+							height: 16px;
+							float: left;
+						}
+						.EXButton > span {
+							cursor: default;
+							text-overflow: ellipsis;
+						}
+					</p>
+				</div>
+				<div class="push_1 grid_7 omega collapsible example">
+					<h2>4. exbutton.html</h2>
+					<p>
+						CIP requires the page to use a <code>DOCTYPE</code>. We have chosen XHTML, but
+						any <code>DOCTYPE</code> will do. Notice the simplicity of the <code>&lt;body&gt;</code>
+						&mdash; you just have to give room to put the components.
+					</p>
+					<p class="html codeblock" lang="5">
+						((?xml version="1.0" encoding="UTF-8"?))
+						((!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"))
+
+						((html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"))
+							((head))
+								((title))EXButton Example((/title))
+								((script type="text/javascript"
+									src="cip.foundation.js"))((/script))
+								((script type="text/javascript"
+									src="exbutton.js"))((/script))
+								((link rel="stylesheet" href="exbutton.css"
+									type="text/css" media="screen" /))
+							<dfn title="If you have overriding stylesheets or additional JS files, make sure to include them after CIP&rsquo;s CSS and JS inclusions.">((/head))</dfn>
+
+							((body))
+								((div id="button0"))((/div))
+								((div id="button1"))((/div))
+								((div id="button2"))((/div))
+								((div id="button3"))((/div))
+								((div id="button4"))((/div))
+							((/body))
+						((/html))
+					</p>
+				</div>
+				<div class="clear withSpace"></div>
+				
+				<div class="push_1 grid_14 alpha omega collapsible example">
+					<h2>5. exbutton.js - CIEvent.ApplicationReady Handler</h2>
+					<p>
+						The <code>CIEvent.ApplicationReady</code> event handler is what replaces <code>div</code>s on a page with functioning buttons.
+					</p>
+					<p class="codeblock" lang="5">
+						<dfn title="[[CIApplication]] is the sole instance of [[CIApplicationInstance]] and is the delegate for application-level events">CIApplication</dfn>.addEvent(<dfn title="[[CIEvent.ApplicationReady]] is fired on [[CIApplication]] once the DOM is ready. Alternatively, we could have wrapped the callback function in a &lt;script&gt; tag and put it at the bottom of the HTML page.">CIEvent.ApplicationReady</dfn>, function() {
+							var button0 = new EXButton({
+								frame: { width: 75 },
+								label: 'Button',
+								description: "Don't bother clicking me",
+								<dfn title="This is just shorthand for [[button0.addEvent(CIEvent.Clicked, ...)]]">Clicked</dfn>: function() { alert('I don\'t do anything'); }
+							});
+							button0.element('button0');
+
+							var button1 = new EXButton({
+								frame: { width: 150 },
+								label: 'Hola, Mundo!',
+								description: "Ver la informaci&oacute;n de mi tama&ntilde;o",
+								subviews: [ new EXIcon({ src: 'images/spanish.png', description: 'Espa&ntilde;ol' }) ],
+								Clicked: function() { alert('I am 150 pixels wide.'); }
+							});
+							button1.element('button1');
+
+							var button2 = new EXButton({
+								frame: { width: CIRect.WidthOfWindow()<dfn title="The width will be dynamically computed. Numbers or delegate functions may be used, making [[CIResizeBehavior]] very flexible.">.dividedBy(2)</dfn> },
+								label: 'Bonjour, le monde!',
+								description: "Voir mes informations de taille",
+								subviews: [ new EXIcon({ src: 'images/french.png', description: 'Fran&ccedil;ais' }) ],
+								Clicked: function() { alert('I am the width of the window divided by 2.'); },
+								<dfn title="If you use dynamic dimensions, make sure to set [[resizable]] to true!">resizable: true</dfn>
+							});
+							button2.element('button2');
+
+							var button3 = new EXButton({
+								frame: { width: CIRect<dfn title="Here we tell the width to depend on the width of button2. Because it delegates measurement of button2 until resize-time, button2 need not be sized nor exist at this point.">.WidthOfView(button2)</dfn>.plus(150) },
+								label: 'Hallo, Welt!',
+								description: "Siehe meine Gr&ouml;&szlig;e Informationen",
+								subviews: [ new EXIcon({ src: 'images/german.png', description: 'Deutsch' }) ],
+								Clicked: function() { alert('I am the width of the second button plus 150 pixels.') },
+								resizable: true
+							});
+							button3.element('button3');
+
+							var button4 = new EXButton({
+								frame: { width: CIRect.WidthOfWindow().minus(209) },
+								label: 'Hola, Mundo &mdash; Bonjour, le monde &mdash; Hallo, Welt &mdash; Hello, World!',
+								description: "See my size information",
+								subviews: [
+									new EXIcon({ src: 'images/spanish.png', description: 'Espa&ntilde;ol' }),
+									new EXIcon({ src: 'images/french.png', description: 'Fran&ccedil;ais' }),
+									new EXIcon({ src: 'images/german.png', description: 'Deutsch' }),
+									new EXIcon({ src: 'images/american.png', description: 'English' })
+								],
+								Clicked: function() {
+									alert(' I am the width of the window minus 209 pixels for the margin, padding, and border.');
+								},
+								resizable: true
+							});
+							button4.element('button4');
+						});
+					</p>
+				</div>
+				<div class="clear withSpace"></div>
+			</div> <!-- end content -->
+		</div> <!-- end mother -->
+		<div id="footer">
+			The Color Interface Project is a <a href="http://www.softilluminations.com">Soft Illuminations, Inc.</a> project. &copy; 2007 &ndash; 2009.<br/><br/>
+			<img src="images/site/si_ring.png" alt="Soft Illuminations, Inc.">
+		</div>
+	</body>
+</html>

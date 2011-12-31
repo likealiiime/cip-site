@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+	<head>
+		<title>The Color Interface Project - Foundation kit</title>
+		<link rel="stylesheet" href="960.css" type="text/css" media="screen" title="Index" charset="utf-8" />
+		<link rel="stylesheet" href="index.css" type="text/css" media="screen" title="Index" charset="utf-8" />
+		<script type="text/javascript">
+		var gOverride = {
+		  gColor: '#FF0000',
+		  gColumns: 16,
+		  pEnabled: false
+		};
+		</script>
+		<script type="text/javascript" src="javascripts/mootools-1.2.4-core-yc.js"></script>
+		<script type="text/javascript" src="javascripts/mootools-1.2.4.4-more.js"></script>
+		<script type="text/javascript" src="javascripts/cipsite.js"></script>
+	</head>
+
+	<body>
+		<div class="container_16" id="mother">
+			<div id="header">
+				<div><div>
+					<h1>Foundation</h1>
+					<p>
+						The Foundation kit includes everything you need to get started.
+					</p>
+					<p>
+						Just by extending <strong>CIObject</strong>,
+						your objects will receive <strong>key-value coding</strong>, <strong>property synthesis</strong>,
+						an <strong>object hierarchy</strong>, and <strong>events</strong>.
+					</p>
+					<p>
+						Extend <strong>CIView</strong> to create visual components with <strong>subviews</strong>,
+						a bounding <strong>frame</strong>, <strong>dynamic resizing</strong>, and the <strong>unrender/render</strong> mechanism &ndash;
+						again, <strong>all for free</strong>.
+					</p>
+				</div></div>
+			</div>
+			<a name="start"></a>
+			<div id="content">
+				<div class="push_1 grid_14 navBanner alpha omega">
+					<div class="grid_1 alpha"><a href="index.html"><img src="images/icons/home.png" alt="home" /></a></div>
+					<div class="grid_13 omega navLinks">
+						<a href="foundation.html#start"><img src="images/numerals/i.png" alt="1" />Foundation Basics</a>
+						<a href="foundation-view.html#start"><img src="images/numerals/ii.png" alt="2" />The View</a>
+						<a href="foundation-together.html#start"><img src="images/numerals/iii.png" alt="3" />Putting it all together</a>
+						<a href="#start" class="selected"><img src="images/numerals/iv.png" alt="4" />FAQs</a>
+					</div>
+				</div>
+				<div class="clear withSpace"></div>
+				
+				<div class="grid_14 push_1 alpha omega">
+					<h2>Frequently Asked Questions</h2>
+					
+					<h3>Q: Why MooTools? Why not jQuery, Dojo, Prototype, <span style="text-decoration: underline;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>?</h3>
+					<h3>A: MooTools is lean, object-minded, and active.</h3>
+					<p>
+						MooTools has just the right mix of lean-ness, extensibility, object-orientation and community for CIP. MooTools Core
+						weighs only 65kb when YUI-compressed, yet the entire Foundation Kit runs on it. It is designed for the object-oriented
+						programmer and focuses on dealing with Elements, data structures, and common web constructs like AJAX and cookies in
+						an object-oriented way. There&rsquo;s nothing wrong with the imperative styles of other libraries, but CIP focuses on
+						the object-oriented paradigm with its classes, delegates, mixins and methods.
+					</p>
+					
+					<br/>
+					
+					<h3>Q: This looks like a lot of typing. Why is CIP so verbose?</h3>
+					<h3>A: You type 100+wpm. Stop complaining.</h3>
+					<p>
+						Sure, there are some long constant and method names. CIP borrows Cocoas&rsquo;s method signature language, which is
+						descriptive and self-documenting (and a function of Objective-C&rsquo;s method names). For instance, which of these
+						methods adds a subview to the beginning of the array: <code>push</code>, <code>shift</code>, <code>unshift</code>,
+						<code>add</code>, or <code>addSubviewToBeginning</code>? Get the picture?
+					</p>
+					
+					<br/>
+					
+					<h3>Q: I wasn&rsquo;t talking about names. Why does it take so much code to set up a <code>CIVIew</code>, for instance?</h3>
+					<h3>A: It&rsquo;s all about process and consistency.</h3>
+					<p>
+						We do wish some of the initialization code could live elsewhere &mdash; <code>this.isA('Class')</code> is
+						<em>so</em> 1999. But the majority of the boring initialization code is about process, which leads to consistent
+						results. For example, by using <code>synthesize</code>, you&rsquo;s telling the world exactly what they can, and
+						cannot, access. Furthermore, you&rsquo;re giving other objects a guaranteed way to access your data. Without this
+						level of consistency, key-value observing would not be possible.
+					</p>
+					
+					<br/>
+					
+					<h3>Q: If CIP is such a modern framework, why do we have to hand-code HTML and CSS?</h3>
+					<h3>A: Because all you have is HTML and CSS.</h3>
+					<p>
+						Don&rsquo;t be tempted by the wiles of abstraction. It&rsquo;s one thing to abstract away the many layers of
+						machinations of packets, protocols and ports with <code>NSConnection</code>/<code>java.net.HttpURLConnection</code>/<code>Net::HTTP</code>.
+						But to abstract away the presentation and structural layers of the entire web is just silly. Your app lives on a
+						web server, which distributes HTML, CSS and JS, and is delivered to a web browser, which consumes HTML, CSS, and JS.
+						The way we see it, there&rsquo;s nothing to abstract or hide.
+					</p>
+					
+					<br/>
+					
+					<h3>Q: How modern is modern? What is CIP&rsquo;s stance on HTML and CSS3?</h3>
+					<h3>A: Go for it, but degrade gracefully.</h3>
+					<p>
+						While the Foundation Kit does not make any presentation decisions, CIP does have a UI Kit. It uses both CSS3
+						and HTML5 to their fullest. With the compliance, speed, and capability of modern browsers like Google Chrome,
+						Apple Safari, (Opera) Opera and Mozilla Firefox, there&rsquo;s no reason to keep your code in the dark ages.
+						Having said that, it&rsquo;s important to realize some people are stuck using less modern browsers. To that end,
+						gracefully degrading your views is a nice solution.
+					</p> 
+				</div>
+				<div class="clear"></div>
+			</div> <!-- end content -->
+		</div> <!-- end mother -->
+		<div id="footer">
+			The Color Interface Project is a <a href="http://www.softilluminations.com">Soft Illuminations, Inc.</a> project. &copy; 2007 &ndash; 2009.<br/><br/>
+			<img src="images/site/si_ring.png" alt="Soft Illuminations, Inc.">
+		</div>
+	</body>
+</html>

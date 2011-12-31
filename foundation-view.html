@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+	<head>
+		<title>The Color Interface Project - Foundation kit</title>
+		<link rel="stylesheet" href="960.css" type="text/css" media="screen" title="Index" charset="utf-8" />
+		<link rel="stylesheet" href="index.css" type="text/css" media="screen" title="Index" charset="utf-8" />
+		<script type="text/javascript">
+		var gOverride = {
+		  gColor: '#FF0000',
+		  gColumns: 16,
+		  pEnabled: false
+		};
+		</script>
+		<script type="text/javascript" src="javascripts/mootools-1.2.4-core-yc.js"></script>
+		<script type="text/javascript" src="javascripts/mootools-1.2.4.4-more.js"></script>
+		<script type="text/javascript" src="javascripts/cipsite.js"></script>
+	</head>
+
+	<body>
+		<div class="container_16" id="mother">
+			<div id="header">
+				<div><div>
+					<h1>Foundation</h1>
+					<p>
+						The Foundation kit includes everything you need to get started.
+					</p>
+					<p>
+						Just by extending <strong>CIObject</strong>,
+						your objects will receive <strong>key-value coding</strong>, <strong>property synthesis</strong>,
+						an <strong>object hierarchy</strong>, and <strong>events</strong>.
+					</p>
+					<p>
+						Extend <strong>CIView</strong> to create visual components with <strong>subviews</strong>,
+						a bounding <strong>frame</strong>, <strong>dynamic resizing</strong>, and the <strong>unrender/render</strong> mechanism &ndash;
+						again, <strong>all for free</strong>.
+					</p>
+				</div></div>
+			</div>
+			<a name="start"></a>
+			<div id="content">
+				<div class="push_1 grid_14 navBanner alpha omega">
+					<div class="grid_1 alpha"><a href="index.html"><img src="images/icons/home.png" alt="home" /></a></div>
+					<div class="grid_13 omega navLinks">
+						<a href="foundation.html#start"><img src="images/numerals/i.png" alt="1" />Foundation Basics</a>
+						<a href="#start" class="selected"><img src="images/numerals/ii.png" alt="2" />The View</a>
+						<a href="foundation-together.html#start"><img src="images/numerals/iii.png" alt="3" />Putting it all together</a>
+						<a href="foundation-faqs.html#start"><img src="images/numerals/iv.png" alt="4" />FAQs</a>
+					</div>
+				</div>
+				<div class="clear withSpace"></div>
+				
+				<div class="grid_14 push_1 alpha omega">
+					<h2>See the View, be the View</h2>
+ 					<img src="images/diagrams/view_flow.png" alt="View Flow" title="Initialization &rarr; Add IS to DOM &rarr; Unrender &rarr; Render" class="floatRight"/>
+					<p>
+						Let&rsquo;s pretend we have a web application. Right now it&rsquo;s straight Javascript, HTML and CSS. It works,
+						but we want to start using more robust, abstracted components and start working with more Javascript so the
+						application will be easier to use, more responsive and easier to develop at a higher level. Using CIP gives us
+						the freedom to replace components and views on an ad-hoc basis. Let&rsquo;s also pretend that we want to write our
+						components for our application. CIP has an extensive UI kit, but we really just need one or two components, not
+						the whole kit-n-kaboodle. We&rsquo;ll introduce <code>CIView</code> concepts by creating a simple button component.
+					</p>
+					<p>
+						All visual components inherit from <code>CIView</code>. It provides an object with the mechanisms it needs
+						to behave consistently: a <code>subviews</code> Array property, a <code>CIRect</code> to define its boundaries,
+						usage of <code>CIResizeBehavior</code> to describe what happens when it is resized, the <code>_makeElement</code>
+						method to lay the immutable structure of the component, and <code>render</code> and <code>unrender</code> methods
+						with which to populate the component.
+					</p>
+				</div>
+				<div class="clear"></div>
+				<div class="grid_7 push_1 alpha">
+					<p>
+						There are four steps to extending <code>CIView</code>:
+						<ol>
+							<li>Extend and initialize the subclass like any other.</li>
+							<li>Programmatically define the structure of the component in the <code>_makeElement</code> method.</li>
+							<li>Override the <code>unrender</code> method to remove the mutable content from the component.</li>
+							<li>Override the <code>render</code> method, to put content into the component.</li>
+						</ol>
+					</p>
+				</div>
+				<div class="push_1 grid_7 omega example">
+					<h2>EXButton&rsquo;s initialization</h2>
+					<p class="codeblock" lang="5">
+						var <dfn title="Prefixing subclasses with a two-character identifier is a Cocoa tradition that dates back to NeXTStep. You are free to use whatever namespacing techniques you like, but be aware that all CIP classes start with CI. Here, the EX stands for EXample">EXButton</dfn> = new Class({
+							Extends: <dfn title="All visual components should inherit from [[CIView]]">CIView</dfn>,
+							
+							initialize: function(configuration) {
+								this.parent(configuration);
+								this.isA('EXButton');
+								this.synthesize({ label: '' }, configuration);
+							}
+						});
+					</p>
+				</div>
+				<div class="clear withSpace"></div>
+			
+				<div class="grid_14 push_1 alpha omega">
+					<h2>Element, element. Who&rsquo;s got the element?</h2>
+					<p>
+						CIP is cognizant of the building blocks of the web, HTML, CSS and Javascript. It doesn&rsquo;t try to abstract away
+						all HTML and CSS because there&rsquo;s really no way around using it &mdash; no matter what framework you use,
+						your code eventually becomes HTML, CSS and Javascript. So why not take control over it? To that extent, CIP
+						requires you to dust off your DOM and CSS knowledge for element creation, unrendering and rendering.
+					</p>
+				</div>
+				<div class="clear"></div>
+				<div class="grid_7 push_1 alpha">
+					<p>
+						<em>Element creation</em> is the step in which the skeleton of your component is laid. Said skeleton is called
+						the <em>immutable structure</em> (IS) because it should be&hellip;immutable. Usually this involves adding
+						a few empty container elements, defining event handlers, telling  subviews where they should lay their IS&rsquo;s,
+						and then calling <code>render</code>. All of this is handled in your view&rsquo;s <code>_makeElement</code> method,
+						which takes one parameter, usually called <code>parent</code>. As you may have guessed, the underscore
+						indicates this method is not to be called publicly. When you are ready to put your component on the page, you
+						just call its <code>element</code> method, passing the containing HTML element.
+					</p>
+					<p>
+						The <code>element</code> method operates in two modes, depending on whether a parameter is given:
+					</p>
+					<ul>
+						<li>
+							<strong>When given a <code>String</code> or <code>Element</code></strong>, it looks for the given
+							<code>Element</code>&rsquo;s <code>id</code> in the DOM using Mootools&rsquo; <code>$</code> method, then passes it to the
+							calling object&rsquo;s <code>_makeElement</code> method.
+						</li>
+						<li>
+							<strong>When given no arguments</strong>, it looks up the calling component&rsquo;s <code>Element</code>
+							in the DOM by its <code>id</code> and returns it. It returns <code>null</code> if no <code>Element</code>
+							was found.
+						</li>
+					</ul>
+					<p>
+						The use of HTML is integral to creating visual components in CIP. Components are injected into specific
+						elements in the DOM, which makes CIP lightweight. You can mix CIP components freely with your
+						existing HTML pages &mdash; construct an entire application or just add a few nice touches &mdash; it&rsquo;s up
+						to you.
+					</p>
+				</div>
+				<div class="grid_7 push_1 omega example">
+					<h2>EXButton&rsquo;s Immutable Structure</h2>
+					<p class="codeblock" lang="5">
+						initialize: function(configuration) {
+							...
+						},
+						
+						_makeElement: function(parent) {
+							var <dfn title="Every component must have a single base [[Element]]. Here, a [[div]] is our base.">button = new Element('div'</dfn>,
+								this.<dfn title="[[CIView#_objectForViewBaseElement]] returns an [[Object]] containing the id, class, and styles properties set for you. See the comment block below for its equivalence.">_objectForViewBaseElement()</dfn>
+							);
+							/*
+								new Element('div', {
+									id: this.id,
+									'class': this.__className,
+									styles: this.frame.toCssStylesObject() 
+								});
+							*/
+							<dfn title="This tells the containing [[Element]] (parent) to add our button [[Element]] as its last child. This is what puts our base [[Element]] in the DOM and on the page.">parent.adopt(button)</dfn>;
+							button.adopt(<dfn title="We&rsquo;re going to wrap our label in a [[span]] [[Element]]. It&rsquo;s a good idea to give each part of a component its own [[Element]].">new Element('span'</dfn>, { <dfn title="Notice we&rsquo;re not giving it any text right now. That&rsquo;s [[render]]&rsquo;s job">html: ''</dfn> }));
+							button.<dfn title="We want our EXButton to do something when clicked">addEvent('click'</dfn>,
+								this._clicked<dfn title="We must explicitly bind the reference to the instance to the [[this]] pointer for our handler. Otherwise, the handler&rsquo;s [[this]] pointer would be the button [[Element]].">.bind(this)</dfn>
+							);
+							this.<dfn title="Make sure to call [[render]] if you want your component to be shown right after it is constructed.">render</dfn>();
+							<dfn title="[[CIView#element]] expects [[_makeElement]] to return the base [[Element]] for the view.">return button</dfn>;
+						}
+					</p>
+					<p>
+						In our CSS file, we would set the <code>font-size</code>, <code>background-image</code> or <code>-color</code>,
+						and any other styling we would want for our button. Unless your component has a fixed width and/or height, the <code>width</code>
+						and <code>height</code> styles should be omitted and left up to the component&rsquo;s <code>CIRect</code>.
+					</p>
+				</div>
+				<div class="clear withSpace"></div>
+				
+				<div class="push_1 grid_7 alpha">
+					<h2>Wax on, wax off, unrender, render</h2>
+					<p>
+						If the immutable structure is the skeleton of a component, then the <code>unrender</code> and <code>render</code> methods are the muscles.
+						<code>Unrender</code>&rsquo;s job is to remove all of the content from the IS, returning the component to the same visual
+						state it was in right after it was added to the page. <code>Render</code> first calls <code>unrender</code>, then puts the content into the
+						IS, requesting data and styling as necessary.
+					</p><p>
+						Both methods should fire the <code>CIEvent.Unrendered</code> and <code>CIEvent.Rendered</code>
+						events, respectively. By listening for these events, other components can be made to re-render when dependent components have changed without
+						having to listen for specific property changes.
+					</p>
+				</div>
+				<div class="push_1 grid_7 omega example">
+					<h2>EXButton&rsquo;s un/rendering</h2>
+					<p class="codeblock" lang="5">
+						_makeElement: function(parent) {
+							...
+						},
+						
+						unrender: function() {
+							this.<dfn title="Since [[_makeElement]] has already been called and the base element is already on the page, [[element]] with no parameters will give us that base element.">element()</dfn>.getFirst().set('html', '');
+							this.fireEvent(<dfn title="Make sure to fire [[CIEvent.Unrendered]] to let other components know what&rsquo;s going on.">CIEvent.Unrendered</dfn>);
+						},
+						render: function() {
+							<dfn title="Always call [[unrender]] first to make sure it&rsquo;s ready to receive new content">this.unrender</dfn>();
+							this.element().getFirst().<dfn title="Here, we&rsquo;s setting the text of our label span to our [[text]] property">set('html', this.label)</dfn>;
+							this.fireEvent(CIEvent.Rendered);
+						}
+					</p>
+				</div>
+				<div class="push_1 grid_14 alpha omega"><p>
+						It may seem inefficient, removing content just to add it back, but the <code>render</code>/<code>unrender</code> cycle isn&rsquo;t
+						invoked that often, just when a component&rsquo;s representation changes. A component&rsquo;s <em>representation</em> is its visual
+						presentation which incorporates its data and state. A button&rsquo;s representation, for example, would rarely change. Its data may just be
+						its label and its only state may be its enabled/disabled state. These are both represented directly and require a change of its representation
+						no matter what. For more complicated components, it&rsquo;s up to you to decide when it should change its representation.
+					</p>
+				</div>
+				<div class="clear withSpace"></div>
+				
+				<div class="push_1 grid_14 alpha omega">
+					<h2>Oh, behave!</h2>
+					<p>
+						Now you know the basics of extending <code>CIView</code>. Of course, there is much more to a <code>CIView</code> than
+						its content. If your view has dimensions, you will want to work with its <code>CIRect</code> frame (another concept
+						borrowed from Cocoa). A view&rsquo;s <em>frame</em> is an instance of <code>CIRect</code> that describes a view&rsquo;s
+						width, height, coordinates (x and y), positioning behavior, clipping behavior, and resizing behavior.
+					</p><p>
+						The first three properties are self explanatory. A <code>CIRect</code>&rsquo;s <em>positioning behavior</em>
+						corresponds to the CSS <code>position</code> property, while its <em>clipping behavior</em> corresponds to the CSS <code>overflow</code>
+						property. The resizing behavior, however, is unique to CIP.
+					</p><p>
+						<em>Resizing behavior</em> describes how a component&rsquo;s frame <code>CIRect</code> changes its width and height properties. It is
+						an instance of <code>CIResizeBehavior</code>. Using <code>CIResizeBehavior</code>, you can tell a <code>CIView</code> that
+						its width should always be the same as the browser window; or that it should be the width of the window minus a certain
+						amount; or that it should be the width of the window minus the width of another view. You can also tell a view that its height
+						should be the same height as its superview; or that its height should be the height of another view plus a certain amount
+						depending on whether one of its subviews is visible or not.
+					</p>
+					<p><img src="images/diagrams/resize_behaviors.png" alt="Resize Behaviors" /></p>
+					<p>
+						All of this is possible, and much simpler than you might think, due to Javascript&rsquo;s closures. For simplicity,
+						<code>CIRect</code> provides common resize behaviors: width/height of window, width/height of superview,
+						width/height of a specified view, and height of the tallest subview of a specified view (the black sheep of the provided behaviors).
+						Of course, you can you can give <code>CIRect</code> a custom <code>CIResizableBehavior</code> if you want alternate
+						resizing logic. Finally, <code>CIResziableBehavior</code> doesn't depend on <code>CIRect</code>, so feel free to use
+						it wherever you need to keep one value in sync with another.
+					</p>
+				</div>
+				<div class="clear"></div>
+				
+				<div class="push_1 grid_14 alpha omega">
+					<h2>Children of the View</h2>
+					<p>
+						The final major piece of <code>CIView</code> is its subviews Array. By keeping your component&rsquo;s child views
+						in <code>CIView#subviews</code>, you can take advantage of how CIP handles window resizing. And subviews is key-value-compliant,
+						so other views can be notified when components lose or gain a subviews. This is useful for container components with
+						content that changes frequently.
+					</p>
+				</div>
+				<div class="clear withSpace"></div>
+				
+				<div class="push_1 grid_14 alpha omega example">
+					<h2>Finishing and using EXButton</h2>
+					<p>
+						Our example button won&rsquo;t deal with a frame or subviews, but we do need to give it a click event handler.
+					</p>
+					<p class="codeblock" lang="5">
+							...
+							unrender: function() { ... },
+							render: function() { ... },
+						
+							_clicked: function(<dfn title="Adhering to a Javascript convention, the first argument of action-oriented event handlers is the [[Event]] object. Note that this object is of type [[Mootools.Event]]. It contains information about the click such as location.">event</dfn>) {
+								<dfn title="All we need to do is fire the [[CIEvent.Clicked]] event on this object, passing the event object, so listeners can respond to it. It may take a while to wrap your head around th event-driven model, but it&rsquo;s very important that you do.">this.fireEvent(CIEvent.Clicked, event)</dfn>;
+							}
+						}); // end of our EXButton Class
+					</p>
+					<p>Now we can use our EXButton to do things when clicked:</p>
+					<p class="codeblock" lang="5">
+						var myButton = new EXButton({
+							text: 'Click me!',
+							<dfn title="This is a shortcut. [[CIObject]] knows to look for [[CIEvent]] event names in its configuration, and turn them into event listeners">Clicked:</dfn> function(event) { alert('Hello, World!'); }
+						});
+						myButton.<dfn title="Here, [[element]] puts our button in a container [[Element]]. As you can see, it&rsquo;s up to the component to decide how it should be added to the DOM. Our component just becomes the last child of its parent, but some components are injected into the top of the [[body]], for example.">element($('myPlaceWithTheButtons'))</dfn>;
+					</p>
+				</div>
+				<div class="clear"></div>
+			</div> <!-- end content -->
+		</div> <!-- end mother -->
+		<div id="footer">
+			The Color Interface Project is a <a href="http://www.softilluminations.com">Soft Illuminations, Inc.</a> project. &copy; 2007 &ndash; 2009.<br/><br/>
+			<img src="images/site/si_ring.png" alt="Soft Illuminations, Inc.">
+		</div>
+	</body>
+</html>
